@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Enrico Lampis — Web Designer & Builder</title>
+<meta name="description" content="High-end, hand-built websites designed and shipped live in days. Selected work and contact for Enrico Lampis — web designer based in Leipzig, open to Dubai & remote.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Enrico Lampis — Web Designer & Builder">
+<meta property="og:description" content="Custom, hand-built websites. No templates, no page builders. Eight live sites and counting.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Enrico Lampis — Web Designer & Builder">
+<meta name="twitter:description" content="Custom, hand-built websites. No templates, no page builders.">
+<style>
+  html,body{margin:0;padding:0;background:#0e0e11;color:#f4f1ea;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  html{overflow-x:clip;}
+  *{box-sizing:border-box;}
+  a{color:inherit;}
+  ::selection{background:#e9b872;color:#0e0e11;}
+  @keyframes glowDrift{0%{transform:translate(-10%,-8%) scale(1);}50%{transform:translate(10%,8%) scale(1.18);}100%{transform:translate(-10%,-8%) scale(1);}}
+  @keyframes glowDrift2{0%{transform:translate(12%,10%) scale(1.1);}50%{transform:translate(-12%,-6%) scale(1);}100%{transform:translate(12%,10%) scale(1.1);}}
+  @keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
+  @keyframes mfFadeIn{from{opacity:0;}to{opacity:1;}}
+  @keyframes mfFadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes mfTypeExp{from{max-width:0;}to{max-width:90vw;}}
+  @keyframes mfSlideR{from{opacity:0;transform:translateX(60px);}to{opacity:1;transform:translateX(0);}}
+  @keyframes mfBlink{0%,100%{opacity:1;}50%{opacity:0;}}
+  @keyframes mfLineDraw{to{stroke-dashoffset:0;}}
+</style>
+</helmet>
+
+<div style="font-family:'Inter',system-ui,sans-serif;position:relative;width:100%;">
+
+  <header style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(20px,5vw,48px);backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(14,14,17,0.72),rgba(14,14,17,0));">
+    <a href="#top" style="text-decoration:none;font-family:'Sora',sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:#f4f1ea;">Enrico&nbsp;Lampis</a>
+    <a href="#contact" style="text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.01em;color:#0e0e11;background:#e9b872;padding:9px 16px;border-radius:999px;white-space:nowrap;">Get in touch</a>
+  </header>
+
+  <span id="top"></span>
+
+  <!-- ============ HERO (video bg + card zoom-out) ============ -->
+  <section id="hero-scroll" data-screen-label="Hero" style="position:relative;height:200vh;">
+    <div id="hero-sticky" style="position:sticky;top:0;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+
+      <!-- Video background: starts invisible+blurred, reveals as card shrinks -->
+      <video id="hero-video" autoplay loop muted playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.18;filter:blur(22px);z-index:0;"><source src="hero.mp4" type="video/mp4"></video>
+
+      <!-- Card: shrinks and fades on scroll -->
+      <div id="hero-card" style="position:relative;width:92vw;height:86vh;border-radius:24px;overflow:hidden;background:radial-gradient(120% 130% at 50% 8%,#1a1a22 0%,#0e0e11 62%);border:1px solid rgba(244,241,234,0.08);display:flex;align-items:center;justify-content:center;will-change:width,height,opacity;z-index:1;">
+        <div style="position:absolute;width:80vmax;height:80vmax;left:-10vmax;top:-30vmax;background:radial-gradient(circle,rgba(233,184,114,0.30) 0%,rgba(233,184,114,0) 60%);filter:blur(14px);animation:glowDrift 16s ease-in-out infinite;pointer-events:none;"></div>
+        <div style="position:absolute;width:70vmax;height:70vmax;right:-20vmax;bottom:-30vmax;background:radial-gradient(circle,rgba(120,140,220,0.16) 0%,rgba(120,140,220,0) 60%);filter:blur(14px);animation:glowDrift2 20s ease-in-out infinite;pointer-events:none;"></div>
+
+        <div id="hero-title" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;">
+          <div style="font-size:clamp(11px,1.4vw,14px);letter-spacing:0.28em;text-transform:uppercase;color:#e9b872;font-weight:600;margin-bottom:22px;">Web Designer &amp; Builder · Leipzig</div>
+          <h1 style="margin:0;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(38px,7.6vw,94px);line-height:1.0;letter-spacing:-0.025em;max-width:14ch;text-wrap:balance;">High-end websites, hand-built and live in days.</h1>
+          <p style="margin:26px 0 0;max-width:48ch;font-size:clamp(15px,1.7vw,19px);line-height:1.55;color:#c9c7c1;">No templates. No page builders. Just clean, fast sites that make the right first impression.</p>
+        </div>
+
+        <div id="hero-mono" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;">
+          <span style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(40px,11vw,86px);letter-spacing:-0.04em;color:#f4f1ea;">E<span style="color:#e9b872;">L</span></span>
+        </div>
+      </div>
+
+      <div id="hero-hint" style="position:absolute;bottom:30px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:8px;color:#9a9aa6;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;animation:floatY 2.4s ease-in-out infinite;z-index:2;">
+        <span>Scroll</span>
+        <span style="font-size:16px;line-height:1;">↓</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SELECTED WORK ============ -->
+  <section id="work" data-screen-label="Selected Work" style="position:relative;z-index:2;background:#0e0e11;padding:clamp(72px,11vw,130px) clamp(20px,5vw,48px) clamp(60px,9vw,110px);">
+    <div style="max-width:1200px;margin:0 auto;">
+      <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:clamp(36px,5vw,60px);">
+        <div>
+          <div style="font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#e9b872;font-weight:600;margin-bottom:14px;">Selected Work</div>
+          <h2 style="margin:0;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(30px,4.6vw,56px);line-height:1.04;letter-spacing:-0.02em;">Eight sites. All live.</h2>
+        </div>
+        <p style="margin:0;max-width:34ch;color:#9a9aa6;font-size:15px;line-height:1.5;">Tap any project to open the real site in a new tab.</p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:clamp(16px,2.2vw,28px);">
+        <sc-for list="{{ works }}" as="item" hint-placeholder-count="8">
+          <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;display:flex;flex-direction:column;gap:16px;padding:14px;border-radius:20px;border:1px solid rgba(244,241,234,0.07);background:#141418;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,background .35s;" style-hover="transform:translateY(-6px);border-color:rgba(233,184,114,0.45);background:#17171d;">
+            <div style="position:relative;width:100%;aspect-ratio:9/18;border-radius:16px;overflow:hidden;background:#0e0e11;border:1px solid rgba(244,241,234,0.06);">
+              <div style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:18px;background-image:repeating-linear-gradient(135deg,#15151b 0px,#15151b 9px,#101015 9px,#101015 18px);">
+                <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:10px;letter-spacing:0.04em;color:#6f6f7a;">{{ item.file }}</span>
+              </div>
+              <img src="images/{{ item.file }}" alt="{{ item.name }} — live website preview" loading="lazy" onError="{{ onImgError }}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;display:block;">
+            </div>
+            <div style="display:flex;flex-direction:column;gap:5px;padding:0 4px 4px;">
+              <div style="font-family:'Sora',sans-serif;font-weight:600;font-size:17px;letter-spacing:-0.01em;">{{ item.name }}</div>
+              <div style="font-size:12.5px;color:#9a9aa6;line-height:1.35;">{{ item.type }}</div>
+              <div style="margin-top:8px;font-size:13px;font-weight:500;color:#e9b872;">Visit live →</div>
+            </div>
+          </a>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ HOW I WORK ============ -->
+  <section id="how" data-screen-label="How I Work" style="position:relative;z-index:2;background:#0e0e11;padding:clamp(60px,9vw,110px) clamp(20px,5vw,48px);border-top:1px solid rgba(244,241,234,0.06);">
+    <div style="max-width:1100px;margin:0 auto;">
+      <h2 style="margin:0 0 clamp(34px,5vw,56px);font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,48px);letter-spacing:-0.02em;">How I work</h2>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:clamp(24px,3vw,44px);">
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#e9b872;">01</div>
+          <h3 style="margin:0;font-family:'Sora',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.01em;">Hand-built, no templates</h3>
+          <p style="margin:0;color:#b6b4ae;font-size:15px;line-height:1.6;">Every site is coded by hand. No page builders, no themes — just clean, fast HTML tailored to the brand.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#e9b872;">02</div>
+          <h3 style="margin:0;font-family:'Sora',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.01em;">Designed &amp; coded with AI, the right way</h3>
+          <p style="margin:0;color:#b6b4ae;font-size:15px;line-height:1.6;">A structured in-house Master-Prompt method pairs real design judgement with AI execution. Fully custom work — delivered in days, not months.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#e9b872;">03</div>
+          <h3 style="margin:0;font-family:'Sora',sans-serif;font-weight:600;font-size:20px;letter-spacing:-0.01em;">Mobile-first &amp; live fast</h3>
+          <p style="margin:0;color:#b6b4ae;font-size:15px;line-height:1.6;">Designed for the phone first, built to load instantly, and shipped live within days of starting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OPERATIONAL SCALE ============ -->
+  <section id="scale" data-screen-label="Operational Scale" style="position:relative;z-index:2;background:#0e0e11;padding:clamp(40px,6vw,80px) clamp(20px,5vw,48px) clamp(60px,9vw,110px);">
+    <div style="max-width:1100px;margin:0 auto;background:linear-gradient(160deg,#16161c,#101015);border:1px solid rgba(244,241,234,0.08);border-radius:24px;padding:clamp(28px,5vw,56px);">
+      <div style="font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#e9b872;font-weight:600;margin-bottom:16px;">Beyond the browser</div>
+      <h2 style="margin:0 0 18px;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(26px,3.8vw,44px);line-height:1.08;letter-spacing:-0.02em;max-width:20ch;">I run complex operations, not just code.</h2>
+      <p style="margin:0 0 clamp(30px,4vw,44px);max-width:62ch;color:#b6b4ae;font-size:clamp(15px,1.7vw,17px);line-height:1.62;">I directed a self-publishing company — building and leading a 6–7 person team across writing, design, advertising and social proof, and scaling production from 3 to 12+ active units. I designed the automation behind it: web-based pipelines that assemble content, slides, voice-over and video, publishing straight to YouTube, Instagram and Facebook.</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:16px;">
+        <div style="background:#0e0e11;border:1px solid rgba(244,241,234,0.07);border-radius:16px;padding:22px 24px;">
+          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,38px);color:#e9b872;letter-spacing:-0.02em;">6–7</div>
+          <div style="margin-top:6px;color:#9a9aa6;font-size:13.5px;">person team, led across departments</div>
+        </div>
+        <div style="background:#0e0e11;border:1px solid rgba(244,241,234,0.07);border-radius:16px;padding:22px 24px;">
+          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,38px);color:#e9b872;letter-spacing:-0.02em;">3 → 12+</div>
+          <div style="margin-top:6px;color:#9a9aa6;font-size:13.5px;">production units scaled</div>
+        </div>
+        <div style="background:#0e0e11;border:1px solid rgba(244,241,234,0.07);border-radius:16px;padding:22px 24px;">
+          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,38px);color:#e9b872;letter-spacing:-0.02em;">End-to-end</div>
+          <div style="margin-top:6px;color:#9a9aa6;font-size:13.5px;">automation, self-built</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MANIFESTO (animated) ============ -->
+  <section id="manifesto" data-screen-label="Manifesto" style="position:relative;z-index:2;background:#000000;height:100vh;overflow:hidden;">
+    <div id="manifesto-stage" style="position:absolute;inset:0;"></div>
+    <div id="manifesto-dots" style="position:absolute;bottom:clamp(24px,4vh,44px);left:0;right:0;display:flex;justify-content:center;gap:8px;align-items:center;z-index:2;"></div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section id="contact" data-screen-label="Contact" style="position:relative;z-index:2;background:linear-gradient(180deg,#0e0e11,#141019);padding:clamp(80px,12vw,150px) clamp(24px,6vw,48px);text-align:center;">
+    <div style="max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;">
+      <h2 style="margin:0;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(32px,6vw,68px);line-height:1.02;letter-spacing:-0.025em;text-wrap:balance;">Let's build something worth visiting.</h2>
+      <p style="margin:22px 0 36px;color:#b6b4ae;font-size:clamp(15px,1.8vw,18px);">Based in Leipzig · open to Dubai &amp; remote.</p>
+      <a href="mailto:hello@enricowebdigital.com" style="text-decoration:none;display:inline-flex;align-items:center;gap:10px;background:#e9b872;color:#0e0e11;font-weight:600;font-size:16px;padding:16px 30px;border-radius:999px;transition:transform .25s,box-shadow .25s;" style-hover="transform:translateY(-2px);box-shadow:0 14px 36px rgba(233,184,114,0.28);">Get in touch →</a>
+      <div style="margin-top:26px;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 22px;color:#6f6f7a;font-size:12.5px;font-family:ui-monospace,Menlo,monospace;">
+        <span>Email — TODO</span>
+        <span>WhatsApp — TODO</span>
+        <span>LinkedIn — TODO</span>
+      </div>
+    </div>
+  </section>
+
+  <footer style="position:relative;z-index:2;background:#0b0b0e;padding:30px clamp(20px,5vw,48px);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid rgba(244,241,234,0.06);">
+    <span style="font-family:'Sora',sans-serif;font-weight:600;font-size:14px;">Enrico Lampis</span>
+    <span style="color:#6f6f7a;font-size:12.5px;">© 2026 · Designed &amp; built by hand</span>
+  </footer>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const card = document.getElementById('hero-card');
+    const title = document.getElementById('hero-title');
+    const mono = document.getElementById('hero-mono');
+    const hint = document.getElementById('hero-hint');
+    const scroll = document.getElementById('hero-scroll');
+    if (!scroll) { this._initManifesto(); return; }
+
+    // Force muted + autoplay (React doesn't reliably set the muted DOM property)
+    const heroVid = document.getElementById('hero-video');
+    if (heroVid) { heroVid.muted = true; heroVid.play().catch(() => {}); }
+
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const lerp = (a, b, t) => a + (b - a) * t;
+
+    const apply = () => {
+      const vw = window.innerWidth, vh = window.innerHeight;
+      const w0 = vw * 0.92, h0 = vh * 0.86, r0 = 24;
+      const sq = Math.min(168, vw * 0.42), r1 = Math.min(34, sq * 0.22);
+      const travel = Math.max(1, scroll.offsetHeight - vh);
+      const p = clamp(-scroll.getBoundingClientRect().top / travel, 0, 1);
+      const e = p < 0.5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+
+      // Card shrinks and fades out
+      if (card) {
+        card.style.width = lerp(w0, sq, e) + 'px';
+        card.style.height = lerp(h0, sq, e) + 'px';
+        card.style.borderRadius = lerp(r0, r1, e) + 'px';
+        card.style.opacity = clamp(1 - p / 0.88, 0, 1);
+      }
+
+      // Text inside card fades early
+      const tFade = clamp(1 - p / 0.38, 0, 1);
+      if (title) {
+        title.style.opacity = tFade;
+        title.style.transform = 'scale(' + lerp(0.86, 1, tFade) + ')';
+      }
+
+      // Monogram briefly visible mid-shrink, then fades with card
+      if (mono) mono.style.opacity = clamp((p - 0.42) / 0.22, 0, 1) * clamp(1 - p / 0.88, 0, 1);
+
+      if (hint) hint.style.opacity = clamp(1 - p / 0.12, 0, 1);
+
+      // Video background: appears and sharpens as card shrinks
+      const vid = document.getElementById('hero-video');
+      if (vid) {
+        const vp = clamp(p / 0.88, 0, 1);
+        vid.style.opacity = lerp(0.18, 1, vp);
+        vid.style.filter = 'blur(' + lerp(22, 0, vp) + 'px)';
+      }
+    };
+
+    apply();
+    window.addEventListener('scroll', apply, { passive: true });
+    document.addEventListener('scroll', apply, { passive: true, capture: true });
+    window.addEventListener('resize', apply);
+    this._cleanup = () => {
+      window.removeEventListener('scroll', apply);
+      document.removeEventListener('scroll', apply, { capture: true });
+      window.removeEventListener('resize', apply);
+    };
+
+    this._initManifesto();
+  }
+
+  componentWillUnmount() {
+    if (this._cleanup) this._cleanup();
+    if (this._destroyManifesto) this._destroyManifesto();
+  }
+
+  _initManifesto() {
+    var stage = document.getElementById('manifesto-stage');
+    var dotsEl = document.getElementById('manifesto-dots');
+    if (!stage) return;
+
+    var F = [
+      // Frame 0: B U I L D .
+      {
+        render: function() {
+          var letters = ['B','U','I','L','D','.'];
+          var chars = letters.map(function(c, i) {
+            return '<span style="opacity:0;' + (i < 5 ? 'margin-right:0.35em;' : '') +
+              'animation:mfFadeIn 0.05s ' + (0.5 + i * 0.2).toFixed(1) + 's forwards;">' + c + '</span>';
+          }).join('');
+          return '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;animation:mfFadeIn 0.4s ease forwards;">' +
+            '<div style="font-family:\'Sora\',sans-serif;font-weight:800;font-size:clamp(48px,8.5vw,102px);color:#e9b872;letter-spacing:0.38em;display:flex;align-items:center;padding:0 clamp(20px,4vw,60px);">' +
+            chars +
+            '<span style="display:inline-block;width:3px;height:0.85em;background:#e9b872;margin-left:0.18em;border-radius:1px;opacity:0;animation:mfFadeIn 0.1s 1.8s forwards,mfBlink 0.65s 1.8s step-end infinite;"></span>' +
+            '</div></div>';
+        }
+      },
+      // Frame 1: Terminal output
+      {
+        render: function() {
+          var lines = [
+            {d: '0.4', t: 'shipping live in days.'},
+            {d: '1.3', t: 'no templates. no excuses.'},
+            {d: '2.2', t: 'done.'}
+          ];
+          var rows = lines.map(function(l) {
+            return '<div style="font-family:ui-monospace,\'Menlo\',\'Consolas\',monospace;font-size:clamp(20px,3vw,42px);font-weight:500;color:#f4f1ea;white-space:nowrap;overflow:hidden;max-width:0;opacity:0;animation:mfFadeIn 0.05s ' + l.d + 's forwards,mfTypeExp 0.55s cubic-bezier(.22,.61,.36,1) ' + l.d + 's forwards;">' +
+              '<span style="color:#e9b872;">&gt; </span>' + l.t + '</div>';
+          }).join('');
+          return '<div style="position:absolute;inset:0;display:flex;align-items:center;animation:mfFadeIn 0.4s ease forwards;">' +
+            '<div style="display:flex;flex-direction:column;gap:clamp(12px,2vw,24px);padding-left:clamp(40px,7vw,100px);">' +
+            rows + '</div></div>';
+        }
+      },
+      // Frame 2: Counter 001 → 008
+      {
+        render: function() {
+          return '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;animation:mfFadeIn 0.4s ease forwards;">' +
+            '<div style="display:flex;flex-direction:column;align-items:center;gap:clamp(10px,1.8vw,20px);">' +
+            '<div id="mf-num" style="font-family:\'Sora\',sans-serif;font-weight:800;font-size:clamp(88px,16vw,200px);color:#e9b872;letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums;opacity:0;animation:mfFadeIn 0.25s 0.35s forwards;">001</div>' +
+            '<div id="mf-lbl" style="font-family:\'Sora\',sans-serif;font-weight:700;font-size:clamp(12px,1.6vw,20px);color:#f4f1ea;letter-spacing:0.28em;text-transform:uppercase;opacity:0;">live sites</div>' +
+            '</div></div>';
+        },
+        init: function(el) {
+          var n = 1;
+          var numEl = el.querySelector('#mf-num');
+          var lblEl = el.querySelector('#mf-lbl');
+          if (!numEl) return null;
+          var iv = setInterval(function() {
+            n++;
+            numEl.textContent = String(n).padStart(3, '0');
+            if (n >= 8) {
+              clearInterval(iv);
+              numEl.style.color = '#ffffff';
+              setTimeout(function() {
+                numEl.style.color = '#e9b872';
+                if (lblEl) { lblEl.style.transition = 'opacity 0.5s'; lblEl.style.opacity = '1'; }
+              }, 120);
+            }
+          }, 240);
+          return function() { clearInterval(iv); };
+        }
+      },
+      // Frame 3: OPEN TO THE WORLD
+      {
+        render: function() {
+          var words = [
+            {w: 'OPEN', c: '#f4f1ea', d: '0.3'},
+            {w: 'TO THE', c: '#f4f1ea', d: '0.7'},
+            {w: 'WORLD', c: '#e9b872', d: '1.1'}
+          ];
+          var divs = words.map(function(item) {
+            return '<div style="font-family:\'Sora\',sans-serif;font-weight:800;font-size:clamp(48px,8.5vw,108px);color:' + item.c + ';letter-spacing:-0.02em;text-transform:uppercase;line-height:0.95;opacity:0;transform:translateX(60px);animation:mfSlideR 0.45s cubic-bezier(.16,1,.3,1) ' + item.d + 's forwards;">' + item.w + '</div>';
+          }).join('');
+          return '<div style="position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:flex-end;padding-bottom:clamp(40px,7vh,90px);padding-right:clamp(32px,6vw,90px);animation:mfFadeIn 0.4s ease forwards;">' +
+            '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:clamp(2px,0.6vw,8px);">' + divs + '</div></div>';
+        }
+      },
+      // Frame 4: HTML tag typing
+      {
+        render: function() {
+          var lines = [
+            {d: '0.4', tag: true, c: '&lt;site&gt;', cursor: false},
+            {d: '1.1', tag: false, c: '&nbsp;&nbsp;built by hand. powered by AI.', cursor: false},
+            {d: '2.0', tag: true, c: '&lt;/site&gt;', cursor: true}
+          ];
+          var rows = lines.map(function(l) {
+            return '<div style="font-family:ui-monospace,\'Menlo\',monospace;font-size:clamp(22px,3.5vw,48px);font-weight:500;color:' + (l.tag ? '#e9b872' : '#f4f1ea') + ';white-space:nowrap;overflow:hidden;max-width:0;opacity:0;animation:mfFadeIn 0.05s ' + l.d + 's forwards,mfTypeExp 0.6s cubic-bezier(.22,.61,.36,1) ' + l.d + 's forwards;">' +
+              l.c + (l.cursor ? '<span style="display:inline-block;width:2px;height:0.85em;background:#e9b872;vertical-align:text-bottom;margin-left:3px;animation:mfBlink 0.65s step-end infinite;"></span>' : '') +
+              '</div>';
+          }).join('');
+          return '<div style="position:absolute;inset:0;display:flex;align-items:center;animation:mfFadeIn 0.4s ease forwards;">' +
+            '<div style="display:flex;flex-direction:column;gap:clamp(8px,1.6vw,18px);padding-left:clamp(40px,7vw,100px);">' + rows + '</div></div>';
+        }
+      },
+      // Frame 5: Signature reveal
+      {
+        render: function() {
+          return '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;animation:mfFadeIn 0.4s ease forwards;">' +
+            '<div style="display:flex;flex-direction:column;align-items:center;gap:clamp(12px,2vw,26px);text-align:center;padding:0 clamp(20px,4vw,60px);">' +
+            '<div style="font-family:\'Sora\',sans-serif;font-weight:800;font-size:clamp(38px,6.5vw,82px);color:#f4f1ea;letter-spacing:-0.01em;opacity:0;transform:translateY(12px);animation:mfFadeUp 0.55s ease 0.4s forwards;">Enrico Lampis</div>' +
+            '<svg style="width:clamp(180px,32vw,440px);height:2px;overflow:visible;opacity:0;animation:mfFadeIn 0.1s 1.0s forwards;" viewBox="0 0 440 2" preserveAspectRatio="none">' +
+            '<line x1="0" y1="1" x2="440" y2="1" stroke="#e9b872" stroke-width="2" stroke-linecap="round" stroke-dasharray="1000" stroke-dashoffset="1000" style="animation:mfLineDraw 0.7s cubic-bezier(.4,0,.2,1) 1.0s forwards;"/>' +
+            '</svg>' +
+            '<div style="font-family:\'Inter\',sans-serif;font-size:clamp(12px,1.6vw,19px);color:#9a9aa6;letter-spacing:0.08em;opacity:0;animation:mfFadeIn 0.5s ease 1.85s forwards;">enricowebdigital.com</div>' +
+            '</div></div>';
+        }
+      }
+    ];
+
+    // Build progress dots
+    if (dotsEl) {
+      dotsEl.innerHTML = F.map(function(_, i) {
+        return '<span id="mf-dot-' + i + '" style="width:' + (i === 0 ? '20px' : '6px') + ';height:6px;border-radius:999px;background:' + (i === 0 ? '#e9b872' : 'rgba(244,241,234,0.25)') + ';transition:width 0.35s,background 0.35s;display:inline-block;"></span>';
+      }).join('');
+    }
+
+    var current = 0;
+    var frameCleanup = null;
+    var cycleTimer = null;
+
+    function updateDots(idx) {
+      F.forEach(function(_, j) {
+        var dot = document.getElementById('mf-dot-' + j);
+        if (!dot) return;
+        dot.style.width = j === idx ? '20px' : '6px';
+        dot.style.background = j === idx ? '#e9b872' : 'rgba(244,241,234,0.25)';
+      });
+    }
+
+    function showFrame(idx) {
+      if (frameCleanup) { frameCleanup(); frameCleanup = null; }
+      stage.innerHTML = F[idx].render();
+      if (F[idx].init) { var r = F[idx].init(stage); frameCleanup = r || null; }
+      updateDots(idx);
+    }
+
+    showFrame(0);
+    cycleTimer = setInterval(function() {
+      current = (current + 1) % F.length;
+      showFrame(current);
+    }, 4200);
+
+    this._destroyManifesto = function() {
+      if (cycleTimer) clearInterval(cycleTimer);
+      if (frameCleanup) frameCleanup();
+    };
+  }
+
+  renderVals() {
+    const works = [
+      { name: 'Era', type: 'Restaurant & Pizzeria · Leipzig', url: 'https://era.enricowebdigital.com', file: 'era_m.png' },
+      { name: 'Veganese', type: 'Vegan Restaurant · Leipzig', url: 'https://veganese.enricowebdigital.com', file: 'veganese_m.png' },
+      { name: 'Panokuko', type: 'Gluten-free Bakery & Café · Leipzig', url: 'https://panokuko.enricowebdigital.com', file: 'panokuko_m.png' },
+      { name: 'Loanna', type: 'Bakery & Patisserie · Leipzig', url: 'https://loanna.enricowebdigital.com', file: 'loanna_m.png' },
+      { name: 'La Grotta', type: 'Pizzeria', url: 'https://preview.enricowebdigital.com', file: 'lagrotta_m.png' },
+      { name: 'Pizzeria Napoli', type: 'Pizzeria', url: 'https://pizzerianapoli.enricowebdigital.com', file: 'napoli_m.png' },
+      { name: 'Luxurygarden', type: 'Event Venue', url: 'https://luxurygarden.enricowebdigital.com', file: 'luxurygarden_m.png' },
+      { name: 'Fedele', type: 'Calabrian Food · E-commerce', url: 'https://fedele.enricowebdigital.com', file: 'fedele_m.png' }
+    ];
+    const onImgError = (ev) => { ev.target.style.display = 'none'; };
+    return { works, onImgError };
+  }
+}
+</script>
+</body>
+</html>
