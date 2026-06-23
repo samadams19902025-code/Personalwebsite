@@ -51,7 +51,16 @@
 </style>
 </helmet>
 
-<div style="font-family:'Inter',system-ui,sans-serif;position:relative;width:100%;">
+<!-- PRELOADER -->
+<div id="preloader" style="position:fixed;inset:0;z-index:9999;background:#0e0e11;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;pointer-events:none;">
+  <div id="preloader-logo" style="opacity:0;transform:scale(0.82);">
+    <span style="font-family:'Sora',sans-serif;font-weight:800;font-size:clamp(52px,10vw,88px);letter-spacing:-0.04em;color:#f4f1ea;">E<span style="color:#e9b872;">L</span></span>
+  </div>
+  <div id="preloader-line" style="width:0;height:1px;background:#e9b872;"></div>
+  <div id="preloader-label" style="opacity:0;font-family:'Sora',sans-serif;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#6f6f7a;">Web Designer &amp; Builder</div>
+</div>
+
+<div style="font-family:'Inter',system-ui,sans-serif;position:relative;width:100%;opacity:0;" id="page-wrap">
 
   <header style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(20px,5vw,48px);backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(14,14,17,0.72),rgba(14,14,17,0));">
     <a href="#top" style="text-decoration:none;font-family:'Sora',sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:#f4f1ea;">Enrico&nbsp;Lampis</a>
@@ -227,83 +236,108 @@
     <span style="color:#6f6f7a;font-size:12.5px;">© 2026 · Designed &amp; built by hand</span>
   </footer>
 
-</div>
+</div><!-- /page-wrap -->
 </x-dc>
 
 <script>
 (function(){
-  /* Aspetta che React abbia montato il componente */
   function initAnimations() {
     if (typeof Lenis === 'undefined' || typeof gsap === 'undefined') {
       setTimeout(initAnimations, 100);
       return;
     }
 
-    /* ── Lenis smooth scroll ── */
-    var lenis = new Lenis({
-      lerp: 0.1,
-      duration: 1.3,
-      easing: function(x){ return Math.min(1, 1 - Math.pow(2, -10 * x)); }
+    gsap.registerPlugin(ScrollTrigger);
+
+    /* ── PRELOADER ── */
+    var tl = gsap.timeline({
+      onComplete: function() {
+        /* Slide preloader up */
+        gsap.to('#preloader', {
+          y: '-100%',
+          duration: 0.55,
+          ease: 'expo.inOut',
+          onComplete: function() {
+            document.getElementById('preloader').style.display = 'none';
+            /* Avvia Lenis solo dopo preloader */
+            startLenis();
+          }
+        });
+        /* Rivela la pagina */
+        gsap.to('#page-wrap', { opacity: 1, duration: 0.4, ease: 'power2.out' });
+      }
     });
 
-    /* Collega Lenis a ScrollTrigger */
-    gsap.registerPlugin(ScrollTrigger);
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
-    gsap.ticker.lagSmoothing(0);
+    tl.to('#preloader-logo', { opacity: 1, scale: 1, duration: 0.9, ease: 'expo.out' })
+      .to('#preloader-line',  { width: 120, duration: 0.6, ease: 'expo.out' }, '-=0.4')
+      .to('#preloader-label', { opacity: 1, duration: 0.5, ease: 'expo.out' }, '-=0.3')
+      .to({}, { duration: 0.8 }) /* pausa lettura */
 
-    /* ── Reveal on scroll per le sezioni ── */
-    var revealTargets = [
-      /* Work section */
-      '#work h2',
-      '#work-grid > *',
-      /* How section */
-      '#how h2',
-      '#how [style*="flex-direction:column"]',
-      /* Scale section */
-      '#scale h2',
-      '#scale p',
-      '#scale [style*="border-radius:16px"]',
-      /* Builder Island */
-      '#builder-island h2',
-      '#builder-island p',
-      '#builder-island a[href*="builderisland"]',
-      '#builder-island [style*="border-radius:20px"]',
-      /* Contact */
-      '#contact h2',
-      '#contact p',
-      '#contact a',
-    ];
+    /* ── Lenis smooth scroll ── */
+    function startLenis() {
+      var lenis = new Lenis({
+        lerp: 0.1,
+        duration: 1.3,
+        easing: function(x){ return Math.min(1, 1 - Math.pow(2, -10 * x)); }
+      });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
 
-    revealTargets.forEach(function(sel) {
-      var els = document.querySelectorAll(sel);
-      els.forEach(function(el, i) {
-        gsap.fromTo(el,
-          { opacity: 0, y: 36 },
+      /* ── Work grid: stagger aggressivo ── */
+      var cards = document.querySelectorAll('#work-grid > *');
+      if (cards.length) {
+        gsap.fromTo(cards,
+          { opacity: 0, y: 60, scale: 0.92 },
           {
-            scrollTrigger: {
-              trigger: el,
-              start: 'top 90%',
-              toggleActions: 'play none none none'
-            },
-            opacity: 1,
-            y: 0,
-            duration: 0.9,
-            delay: i * 0.06,
+            scrollTrigger: { trigger: '#work-grid', start: 'top 85%', toggleActions: 'play none none none' },
+            opacity: 1, y: 0, scale: 1,
+            duration: 0.8,
+            stagger: 0.08,
             ease: 'expo.out'
           }
         );
+      }
+
+      /* ── Reveal sezioni ── */
+      var sections = [
+        { sel: '#work h2',                       y: 40 },
+        { sel: '#how h2',                         y: 40 },
+        { sel: '#how [style*="flex-direction:column"]', y: 50 },
+        { sel: '#scale h2',                       y: 40 },
+        { sel: '#scale p',                        y: 30 },
+        { sel: '#scale [style*="border-radius:16px"]', y: 40 },
+        { sel: '#builder-island h2',              y: 50 },
+        { sel: '#builder-island p',               y: 30 },
+        { sel: '#builder-island a[href*="builderisland"]', y: 20 },
+        { sel: '#builder-island [style*="border-radius:20px"]', y: 40 },
+        { sel: '#contact h2',                     y: 50 },
+        { sel: '#contact p',                      y: 30 },
+        { sel: '#contact a',                      y: 20 },
+      ];
+
+      sections.forEach(function(item) {
+        var els = document.querySelectorAll(item.sel);
+        els.forEach(function(el, i) {
+          gsap.fromTo(el,
+            { opacity: 0, y: item.y },
+            {
+              scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' },
+              opacity: 1, y: 0,
+              duration: 0.85,
+              delay: i * 0.05,
+              ease: 'expo.out'
+            }
+          );
+        });
       });
-    });
+    }
   }
 
-  /* Lenis non interferisce con il listener scroll dell'hero:
-     i getBoundingClientRect() del hero leggono la posizione DOM reale
-     che Lenis aggiorna frame by frame via RAF. */
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function(){ setTimeout(initAnimations, 300); });
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(initAnimations, 200); });
   } else {
-    setTimeout(initAnimations, 300);
+    setTimeout(initAnimations, 200);
   }
 })();
 </script>
