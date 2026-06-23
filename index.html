@@ -13,6 +13,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 <title>Enrico Lampis — Web Designer & Builder</title>
 <meta name="description" content="High-end, hand-built websites designed and shipped live in days. Selected work and contact for Enrico Lampis — web designer based in Leipzig, open to Dubai & remote.">
 <meta property="og:type" content="website">
@@ -226,6 +229,85 @@
 
 </div>
 </x-dc>
+
+<script>
+(function(){
+  /* Aspetta che React abbia montato il componente */
+  function initAnimations() {
+    if (typeof Lenis === 'undefined' || typeof gsap === 'undefined') {
+      setTimeout(initAnimations, 100);
+      return;
+    }
+
+    /* ── Lenis smooth scroll ── */
+    var lenis = new Lenis({
+      lerp: 0.1,
+      duration: 1.3,
+      easing: function(x){ return Math.min(1, 1 - Math.pow(2, -10 * x)); }
+    });
+
+    /* Collega Lenis a ScrollTrigger */
+    gsap.registerPlugin(ScrollTrigger);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    /* ── Reveal on scroll per le sezioni ── */
+    var revealTargets = [
+      /* Work section */
+      '#work h2',
+      '#work-grid > *',
+      /* How section */
+      '#how h2',
+      '#how [style*="flex-direction:column"]',
+      /* Scale section */
+      '#scale h2',
+      '#scale p',
+      '#scale [style*="border-radius:16px"]',
+      /* Builder Island */
+      '#builder-island h2',
+      '#builder-island p',
+      '#builder-island a[href*="builderisland"]',
+      '#builder-island [style*="border-radius:20px"]',
+      /* Contact */
+      '#contact h2',
+      '#contact p',
+      '#contact a',
+    ];
+
+    revealTargets.forEach(function(sel) {
+      var els = document.querySelectorAll(sel);
+      els.forEach(function(el, i) {
+        gsap.fromTo(el,
+          { opacity: 0, y: 36 },
+          {
+            scrollTrigger: {
+              trigger: el,
+              start: 'top 90%',
+              toggleActions: 'play none none none'
+            },
+            opacity: 1,
+            y: 0,
+            duration: 0.9,
+            delay: i * 0.06,
+            ease: 'expo.out'
+          }
+        );
+      });
+    });
+  }
+
+  /* Lenis non interferisce con il listener scroll dell'hero:
+     i getBoundingClientRect() del hero leggono la posizione DOM reale
+     che Lenis aggiorna frame by frame via RAF. */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(initAnimations, 300); });
+  } else {
+    setTimeout(initAnimations, 300);
+  }
+})();
+</script>
+
 <script type="text/x-dc" data-dc-script>
 class Component extends DCLogic {
   componentDidMount() {
