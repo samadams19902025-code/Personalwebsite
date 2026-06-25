@@ -107,7 +107,7 @@
           <div style="font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#e9b872;font-weight:600;margin-bottom:14px;">Selected Work</div>
           <h2 style="margin:0;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(30px,4.6vw,56px);line-height:1.04;letter-spacing:-0.02em;">Seven sites. All live.</h2>
         </div>
-        <p style="margin:0;max-width:34ch;color:#9a9aa6;font-size:15px;line-height:1.5;">Tap any project to open the real site in a new tab.</p>
+        <p id="work-subtitle" style="margin:0;max-width:34ch;color:#9a9aa6;font-size:15px;line-height:1.5;">Tap any project to open the real site in a new tab.</p>
       </div>
 
       <div id="work-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:clamp(12px,2.2vw,28px);">
@@ -284,16 +284,28 @@
       gsap.ticker.add(function(time){ lenis.raf(time * 1000); });
       gsap.ticker.lagSmoothing(0);
 
-      /* ── Work grid: stagger aggressivo ── */
+      /* ── Work: sottotitolo + card entrano da destra, una alla volta (destra→sinistra) ── */
+      var workSub = document.getElementById('work-subtitle');
+      if (workSub) {
+        gsap.fromTo(workSub,
+          { opacity: 0, x: 80 },
+          {
+            scrollTrigger: { trigger: '#work-grid', start: 'top 90%', toggleActions: 'play none none none' },
+            opacity: 1, x: 0,
+            duration: 0.9,
+            ease: 'expo.out'
+          }
+        );
+      }
       var cards = document.querySelectorAll('#work-grid > *');
       if (cards.length) {
         gsap.fromTo(cards,
-          { opacity: 0, y: 60, scale: 0.92 },
+          { opacity: 0, x: 80 },
           {
             scrollTrigger: { trigger: '#work-grid', start: 'top 85%', toggleActions: 'play none none none' },
-            opacity: 1, y: 0, scale: 1,
-            duration: 0.8,
-            stagger: 0.08,
+            opacity: 1, x: 0,
+            duration: 0.9,
+            stagger: { each: 0.12, from: 'end' },
             ease: 'expo.out'
           }
         );
