@@ -157,19 +157,19 @@
   <!-- ============ OPERATIONAL SCALE ============ -->
   <section id="scale" data-screen-label="Operational Scale" style="position:relative;z-index:2;background:#0e0e11;padding:clamp(40px,6vw,80px) clamp(20px,5vw,48px) clamp(60px,9vw,110px);">
     <div style="max-width:1100px;margin:0 auto;background:linear-gradient(160deg,#16161c,#101015);border:1px solid rgba(244,241,234,0.08);border-radius:24px;padding:clamp(28px,5vw,56px);">
-      <div style="font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#e9b872;font-weight:600;margin-bottom:16px;">Beyond the browser</div>
-      <h2 style="margin:0 0 18px;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(26px,3.8vw,44px);line-height:1.08;letter-spacing:-0.02em;max-width:20ch;">I run complex operations, not just code.</h2>
-      <p style="margin:0 0 clamp(30px,4vw,44px);max-width:62ch;color:#b6b4ae;font-size:clamp(15px,1.7vw,17px);line-height:1.62;">I directed a self-publishing company, building and leading a 6 to 7 person team across writing, design, advertising and social proof, and scaling production from 3 to 12+ active units. I designed the automation behind it: web-based pipelines that assemble content, slides, voice-over and video, publishing straight to YouTube, Instagram and Facebook.</p>
+      <div data-scale-reveal style="font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#e9b872;font-weight:600;margin-bottom:16px;">Beyond the browser</div>
+      <h2 data-scale-reveal style="margin:0 0 18px;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(26px,3.8vw,44px);line-height:1.08;letter-spacing:-0.02em;max-width:20ch;">I run complex operations, not just code.</h2>
+      <p data-scale-reveal style="margin:0 0 clamp(30px,4vw,44px);max-width:62ch;color:#b6b4ae;font-size:clamp(15px,1.7vw,17px);line-height:1.62;">I directed a self-publishing company, building and leading a 6 to 7 person team across writing, design, advertising and social proof, and scaling production from 3 to 12+ active units. I designed the automation behind it: web-based pipelines that assemble content, slides, voice-over and video, publishing straight to YouTube, Instagram and Facebook.</p>
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,180px),1fr));gap:16px;">
-        <div style="background:#0e0e11;border:1px solid rgba(244,241,234,0.07);border-radius:16px;padding:22px 24px;">
+        <div data-scale-reveal style="background:#0e0e11;border:1px solid rgba(244,241,234,0.07);border-radius:16px;padding:22px 24px;">
           <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,38px);color:#e9b872;letter-spacing:-0.02em;">6-7</div>
           <div style="margin-top:6px;color:#9a9aa6;font-size:13.5px;">person team, led across departments</div>
         </div>
-        <div style="background:#0e0e11;border:1px solid rgba(244,241,234,0.07);border-radius:16px;padding:22px 24px;">
+        <div data-scale-reveal style="background:#0e0e11;border:1px solid rgba(244,241,234,0.07);border-radius:16px;padding:22px 24px;">
           <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,38px);color:#e9b872;letter-spacing:-0.02em;">3 → 12+</div>
           <div style="margin-top:6px;color:#9a9aa6;font-size:13.5px;">production units scaled</div>
         </div>
-        <div style="background:#0e0e11;border:1px solid rgba(244,241,234,0.07);border-radius:16px;padding:22px 24px;">
+        <div data-scale-reveal style="background:#0e0e11;border:1px solid rgba(244,241,234,0.07);border-radius:16px;padding:22px 24px;">
           <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(28px,4vw,38px);color:#e9b872;letter-spacing:-0.02em;">End-to-end</div>
           <div style="margin-top:6px;color:#9a9aa6;font-size:13.5px;">automation, self-built</div>
         </div>
@@ -311,14 +311,26 @@
         );
       }
 
+      /* ── Scale: elementi entrano da sinistra, uno alla volta, più lenti ── */
+      var scaleEls = document.querySelectorAll('#scale [data-scale-reveal]');
+      if (scaleEls.length) {
+        gsap.fromTo(scaleEls,
+          { opacity: 0, x: -90 },
+          {
+            scrollTrigger: { trigger: '#scale', start: 'top 80%', toggleActions: 'play none none none' },
+            opacity: 1, x: 0,
+            duration: 1.1,
+            stagger: { each: 0.22, from: 'start' },
+            ease: 'expo.out'
+          }
+        );
+      }
+
       /* ── Reveal sezioni ── */
       var sections = [
         { sel: '#work h2',                       y: 40 },
         { sel: '#how h2',                         y: 40 },
         { sel: '#how [style*="flex-direction:column"]', y: 50 },
-        { sel: '#scale h2',                       y: 40 },
-        { sel: '#scale p',                        y: 30 },
-        { sel: '#scale [style*="border-radius:16px"]', y: 40 },
         { sel: '#builder-island h2',              y: 50 },
         { sel: '#builder-island p',               y: 30 },
         { sel: '#builder-island a[href*="builderisland"]', y: 20 },
