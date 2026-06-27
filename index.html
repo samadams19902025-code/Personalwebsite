@@ -30,6 +30,19 @@
   *{box-sizing:border-box;}
   a{color:inherit;}
   ::selection{background:#e9b872;color:#0e0e11;}
+  /* Evidenziatore frase chiave (clone su piu righe) */
+  .hl{background:#e9b872;color:#0e0e11;padding:0.02em 0.16em;border-radius:0.07em;-webkit-box-decoration-break:clone;box-decoration-break:clone;}
+  /* Hover-grid intelligente: le altre card sbiadiscono */
+  @media (hover:hover) and (pointer:fine){
+    #work-grid a{transition:opacity .35s ease, filter .35s ease, transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s, background .35s !important;}
+    #work-grid:hover a{opacity:0.28;filter:saturate(0.4);transform:scale(0.97);}
+    #work-grid a:hover{opacity:1;filter:none;transform:translateY(-6px) scale(1);}
+  }
+  /* Mobile: solo tap feedback (niente dim, card sempre piene) */
+  @media (hover:none){
+    #work-grid a{transition:transform .2s ease !important;}
+    #work-grid a:active{transform:scale(0.96);}
+  }
   @keyframes glowDrift{0%{transform:translate(-10%,-8%) scale(1);}50%{transform:translate(10%,8%) scale(1.18);}100%{transform:translate(-10%,-8%) scale(1);}}
   @keyframes glowDrift2{0%{transform:translate(12%,10%) scale(1.1);}50%{transform:translate(-12%,-6%) scale(1);}100%{transform:translate(12%,10%) scale(1.1);}}
   @keyframes floatY{0%,100%{transform:translateY(0);}50%{transform:translateY(7px);}}
@@ -83,7 +96,7 @@
 
         <div id="hero-title" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;">
           <div style="font-size:clamp(11px,1.4vw,14px);letter-spacing:0.28em;text-transform:uppercase;color:#e9b872;font-weight:600;margin-bottom:22px;">Web Designer &amp; Builder</div>
-          <h1 style="margin:0;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(38px,7.6vw,94px);line-height:1.0;letter-spacing:-0.025em;max-width:14ch;text-wrap:balance;">High-end websites, hand-built and live in days.</h1>
+          <h1 style="margin:0;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(38px,7.6vw,94px);line-height:1.0;letter-spacing:-0.025em;max-width:14ch;text-wrap:balance;">High-end websites, hand-built and <span class="hl">live in days</span>.</h1>
           <p style="margin:26px 0 0;max-width:48ch;font-size:clamp(15px,1.7vw,19px);line-height:1.55;color:#c9c7c1;">No templates. No page builders. Just clean, fast sites that make the right first impression.</p>
         </div>
 
@@ -306,11 +319,11 @@
             opacity: 1, x: 0,
             duration: 0.9,
             stagger: { each: 0.12, from: 'end' },
-            ease: 'expo.out'
+            ease: 'expo.out',
+            clearProps: 'transform'
           }
         );
       }
-
       /* ── Scale: elementi entrano da sinistra, uno alla volta, più lenti ── */
       var scaleEls = document.querySelectorAll('#scale [data-scale-reveal]');
       if (scaleEls.length) {
