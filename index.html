@@ -32,6 +32,16 @@
   ::selection{background:#e9b872;color:#0e0e11;}
   /* Evidenziatore frase chiave (clone su piu righe) */
   .hl{background:#e9b872;color:#0e0e11;padding:0.02em 0.16em;border-radius:0.07em;-webkit-box-decoration-break:clone;box-decoration-break:clone;}
+  /* Glow sui GLIFI del testo hero: clone trasparente con gradiente clippato alle lettere, segue il cursore */
+  .glow-clone{position:absolute;inset:0;pointer-events:none;color:transparent!important;opacity:0;transition:opacity .2s ease;
+    background-image:radial-gradient(circle 130px at var(--gx,-999px) var(--gy,-999px), #fffdf4 0%, #ffe9b8 34%, rgba(244,205,130,0.75) 55%, rgba(233,184,114,0) 76%);
+    -webkit-background-clip:text;background-clip:text;
+    filter:drop-shadow(0 0 10px rgba(255,226,160,.9)) drop-shadow(0 0 26px rgba(233,184,114,.55));}
+  .glow-clone *{color:transparent!important;background:transparent!important;}
+  .glow-host{position:relative;}
+  .glow-host:hover .glow-clone{opacity:1;}
+  /* Righe della lista espandibile (animate via GSAP al toggle) */
+  #more-list a{will-change:transform,opacity;}
   /* Hover-grid intelligente: le altre card sbiadiscono */
   @media (hover:hover) and (pointer:fine){
     #work-grid a{transition:opacity .35s ease, filter .35s ease, transform .35s cubic-bezier(.2,.7,.2,1), border-color .35s, background .35s !important;}
@@ -77,7 +87,6 @@
 
   <header style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(20px,5vw,48px);backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(14,14,17,0.72),rgba(14,14,17,0));">
     <a href="#top" style="text-decoration:none;font-family:'Sora',sans-serif;font-weight:700;font-size:16px;letter-spacing:-0.01em;color:#f4f1ea;">Enrico&nbsp;Lampis</a>
-    <a href="#contact" style="text-decoration:none;font-size:13px;font-weight:500;letter-spacing:0.01em;color:#0e0e11;background:#e9b872;padding:9px 16px;border-radius:999px;white-space:nowrap;">Get in touch</a>
   </header>
 
   <span id="top"></span>
@@ -118,7 +127,7 @@
       <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:clamp(36px,5vw,60px);">
         <div>
           <div style="font-size:12px;letter-spacing:0.26em;text-transform:uppercase;color:#e9b872;font-weight:600;margin-bottom:14px;">Selected Work</div>
-          <h2 style="margin:0;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(30px,4.6vw,56px);line-height:1.04;letter-spacing:-0.02em;">Seven sites. All live.</h2>
+          <h2 style="margin:0;font-family:'Sora',sans-serif;font-weight:700;font-size:clamp(30px,4.6vw,56px);line-height:1.04;letter-spacing:-0.02em;">Twelve sites. All live.</h2>
         </div>
         <p id="work-subtitle" style="margin:0;max-width:34ch;color:#9a9aa6;font-size:15px;line-height:1.5;">Tap any project to open the real site in a new tab.</p>
       </div>
@@ -139,6 +148,25 @@
             </div>
           </a>
         </sc-for>
+      </div>
+
+      <!-- Lista espandibile: gli altri siti live -->
+      <div style="margin-top:clamp(36px,5vw,56px);">
+        <button id="more-toggle" type="button" aria-expanded="false" aria-controls="more-list" style="display:flex;align-items:center;gap:12px;width:100%;background:#141418;border:1px solid rgba(244,241,234,0.09);border-radius:16px;padding:16px 20px;cursor:pointer;color:#f4f1ea;font-family:'Sora',sans-serif;font-weight:600;font-size:15px;letter-spacing:-0.01em;transition:border-color .3s,background .3s;">
+          <span style="color:#e9b872;">+9</span> more live sites
+          <span id="more-arrow" style="margin-left:auto;color:#e9b872;transition:transform .3s;">↓</span>
+        </button>
+        <div id="more-list" style="display:none;border-top:1px solid rgba(244,241,234,0.08);margin-top:14px;">
+          <sc-for list="{{ worksMore }}" as="m" hint-placeholder-count="9">
+            <a href="{{ m.url }}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:baseline;justify-content:space-between;gap:18px;padding:15px 6px;border-bottom:1px solid rgba(244,241,234,0.08);text-decoration:none;color:inherit;transition:background .25s,padding .25s;" style-hover="background:#141418;padding-left:14px;padding-right:14px;">
+              <span style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;min-width:0;">
+                <span style="font-family:'Sora',sans-serif;font-weight:600;font-size:16px;letter-spacing:-0.01em;white-space:nowrap;">{{ m.name }}</span>
+                <span style="font-size:12.5px;color:#9a9aa6;">{{ m.type }}</span>
+              </span>
+              <span style="font-size:13px;font-weight:500;color:#e9b872;white-space:nowrap;">Visit →</span>
+            </a>
+          </sc-for>
+        </div>
       </div>
     </div>
   </section>
@@ -348,10 +376,8 @@
         { sel: '#builder-island p',               y: 30 },
         { sel: '#builder-island a[href*="builderisland"]', y: 20 },
         { sel: '#builder-island [style*="border-radius:20px"]', y: 40 },
-        { sel: '#contact h2',                     y: 50 },
-        { sel: '#contact p',                      y: 30 },
-        { sel: '#contact a',                      y: 20 },
       ];
+      /* #contact ha una coreografia dedicata (360 + typewriter + contatti): vedi script in fondo */
 
       sections.forEach(function(item) {
         var els = document.querySelectorAll(item.sel);
@@ -593,19 +619,315 @@ class Component extends DCLogic {
   }
 
   renderVals() {
+    /* Card grandi: i 3 di punta */
     const works = [
-      { name: 'Era', type: 'Restaurant & Pizzeria · Leipzig', url: 'https://era.enricowebdigital.com', file: 'era_m.png', vid: 'era.mp4' },
-      { name: 'Veganese', type: 'Vegan Restaurant · Leipzig', url: 'https://veganese.enricowebdigital.com', file: 'veganese_m.png', vid: 'veganese.mp4' },
-      { name: 'Panokuko', type: 'Gluten-free Bakery & Café · Leipzig', url: 'https://panokuko.enricowebdigital.com', file: 'panokuko_m.png', vid: 'panokuko.mp4' },
-      { name: 'Loanna', type: 'Bakery & Patisserie · Leipzig', url: 'https://loanna.enricowebdigital.com', file: 'loanna_m.png', vid: 'loanna.mp4' },
-      { name: 'Pizzeria Napoli', type: 'Pizzeria · Leipzig', url: 'https://pizzerianapoli.enricowebdigital.com', file: 'napoli_m.png', vid: 'napoli.mp4' },
-      { name: 'Luxurygarden', type: 'Event Venue · Leipzig', url: 'https://luxurygarden.enricowebdigital.com', file: 'luxurygarden_m.png', vid: 'luxurygarden.mp4' },
-      { name: 'G2000', type: 'Garage doors & gates · Leipzig', url: 'https://samadams19902025-code.github.io/G2000/', file: 'g2000_m.png', vid: 'g2000.mp4' }
+      { name: 'Giggiolandia', type: 'Candy & Party Shop · Cagliari', url: 'https://giggiolandia.enricowebdigital.com', file: 'giggiolandia_m.png', vid: 'giggiolandia.mp4' },
+      { name: 'OttO', type: 'Mocktails & Cocktails · Cagliari', url: 'https://ottocagliari.enricowebdigital.com', file: 'otto_m.png', vid: '' },
+      { name: 'Loanna', type: 'Bakery & Patisserie · Leipzig', url: 'https://loanna.enricowebdigital.com', file: 'loanna_m.png', vid: 'loanna.mp4' }
+    ];
+    /* Lista espandibile: tutti gli altri siti live */
+    const worksMore = [
+      { name: 'Era', type: 'Restaurant & Pizzeria · Leipzig', url: 'https://era.enricowebdigital.com' },
+      { name: 'Luxurygarden', type: 'Event Venue · Leipzig', url: 'https://luxurygarden.enricowebdigital.com' },
+      { name: 'Veganese', type: 'Vegan Restaurant · Leipzig', url: 'https://veganese.enricowebdigital.com' },
+      { name: 'I Fiori di Lina', type: 'Florist · Cagliari', url: 'https://ifioridilina.enricowebdigital.com' },
+      { name: 'MaeStria', type: 'Esoteric Shop · Cagliari', url: 'https://maestria.enricowebdigital.com' },
+      { name: 'Azienda Fedele', type: 'Calabrian Food, nationwide shipping', url: 'https://fedele.enricowebdigital.com' },
+      { name: 'Panokuko', type: 'Gluten-free Bakery & Café · Leipzig', url: 'https://panokuko.enricowebdigital.com' },
+      { name: 'Pizzeria Napoli', type: 'Pizzeria · Leipzig', url: 'https://pizzerianapoli.enricowebdigital.com' },
+      { name: 'G2000', type: 'Garage doors & gates · Leipzig', url: 'https://samadams19902025-code.github.io/G2000/' }
     ];
     const onImgError = (ev) => { ev.target.style.display = 'none'; };
-    return { works, onImgError };
+    return { works, worksMore, onImgError };
   }
 }
+</script>
+
+<!-- ============ GLOW CURSORE sull'evidenziatore oro (.hl) + tendina lista siti ============ -->
+<script>
+(function(){
+  /* ---- tendina "+9 more live sites": espansione GSAP + righe in cascata ---- */
+  var animating = false;
+  document.addEventListener('click', function(e){
+    var btn = e.target && e.target.closest ? e.target.closest('#more-toggle') : null;
+    if (!btn || animating) return;
+    var list = document.getElementById('more-list');
+    var arrow = document.getElementById('more-arrow');
+    var rows = list ? list.querySelectorAll('a') : [];
+    if (!list) return;
+    var open = list.style.display !== 'none';
+    var hasGsap = typeof gsap !== 'undefined';
+
+    if (!hasGsap) { /* fallback senza animazione */
+      list.style.display = open ? 'none' : 'block';
+      btn.setAttribute('aria-expanded', String(!open));
+      if (arrow) arrow.style.transform = open ? '' : 'rotate(180deg)';
+      return;
+    }
+
+    animating = true;
+    if (!open) {
+      /* APRE: il pannello si spiega dall'alto (clip), le righe scivolano dentro in cascata con blur che si dissolve */
+      list.style.display = 'block';
+      list.style.overflow = 'hidden';
+      btn.setAttribute('aria-expanded', 'true');
+      var h = list.scrollHeight;
+      gsap.timeline({ onComplete: function(){ list.style.height = 'auto'; list.style.overflow = ''; animating = false; } })
+        .fromTo(list, { height: 0 }, { height: h, duration: 0.65, ease: 'expo.inOut' }, 0)
+        .to(arrow, { rotate: 180, duration: 0.4, ease: 'expo.out' }, 0)
+        .fromTo(rows,
+          { opacity: 0, y: 26, filter: 'blur(6px)' },
+          { opacity: 1, y: 0, filter: 'blur(0px)', duration: 0.55, ease: 'expo.out', stagger: 0.055 },
+          0.18);
+    } else {
+      /* CHIUDE: cascata inversa veloce, poi il pannello si richiude */
+      list.style.overflow = 'hidden';
+      btn.setAttribute('aria-expanded', 'false');
+      gsap.timeline({ onComplete: function(){ list.style.display = 'none'; list.style.height = ''; list.style.overflow = ''; animating = false; } })
+        .to(rows, { opacity: 0, y: 14, duration: 0.22, ease: 'power2.in', stagger: { each: 0.02, from: 'end' } }, 0)
+        .to(arrow, { rotate: 0, duration: 0.35, ease: 'expo.out' }, 0)
+        .to(list, { height: 0, duration: 0.45, ease: 'expo.inOut' }, 0.12);
+    }
+  });
+
+  /* ---- entrata del bottone tendina (scroll-triggered, appena il template ha renderizzato) ---- */
+  var tries = 0;
+  (function armToggleEntrance(){
+    /* gli id esistono anche nel template <x-dc> (nascosto): quelli NON valgono, il runtime li rimpiazza */
+    var btn = document.getElementById('more-toggle');
+    if (!btn || btn.closest('x-dc')) { if (++tries < 400) setTimeout(armToggleEntrance, 60); return; }
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.fromTo(btn,
+      { opacity: 0, y: 34 },
+      { scrollTrigger: { trigger: btn, start: 'top 92%', toggleActions: 'play none none none' },
+        opacity: 1, y: 0, duration: 0.8, ease: 'expo.out' });
+  })();
+
+  /* ---- CONTACT: titolo fa un 360 in sincro con lo scroll, sottotitolo typewriter, poi i contatti ---- */
+  var ctries = 0;
+  (function armContact(){
+    /* aspetta il #contact RENDERIZZATO (fuori da <x-dc>) e con tutti i figli al loro posto */
+    var sec = document.getElementById('contact');
+    var wrap = sec && (sec.querySelector(':scope > div') || sec);
+    var h2 = wrap && wrap.querySelector('h2'), sub = wrap && wrap.querySelector('p');
+    var links = wrap && wrap.querySelector('h2 ~ p ~ div');
+    if (!sec || sec.closest('x-dc') || !h2 || !sub || !links) {
+      if (++ctries < 400) setTimeout(armContact, 60); return;
+    }
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);                        /* senza, il timeline parte subito e non si vede nulla */
+
+    var full = sub.textContent;
+    sub.textContent = '';
+    sub.style.minHeight = '1.5em';
+    gsap.set(links.children, { opacity: 0, y: 36 });
+
+    var typer = { p: 0 };
+    gsap.timeline({
+      /* e' l'ultima sezione: la corsa finisce a fondo pagina, cosi' il progresso arriva a 1 */
+      scrollTrigger: { trigger: sec, start: 'top 92%', end: 'bottom bottom', scrub: 0.5 }
+    })
+      /* 360 del titolo, agganciato allo scroll (avanti e indietro) */
+      .fromTo(h2, { rotationY: 0, opacity: 0.35 },
+                  { rotationY: 360, opacity: 1, transformPerspective: 900, ease: 'none', duration: 0.55 }, 0)
+      /* il sottotitolo si SCRIVE, carattere per carattere */
+      .to(typer, { p: 1, duration: 0.32, ease: 'none', onUpdate: function(){
+          var nchar = Math.round(typer.p * full.length);
+          sub.textContent = full.slice(0, nchar) + (typer.p < 1 ? '▌' : '');
+        } }, 0.45)
+      /* poi compaiono i contatti, in cascata */
+      .to(links.children, { opacity: 1, y: 0, stagger: 0.09, duration: 0.22, ease: 'power2.out' }, 0.78);
+  })();
+
+  /* ---- glow SOLO sui glifi dei tre testi del hero (kicker, titolo, lead) ---- */
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+  var gtries = 0;
+  (function armHeroGlow(){
+    var host = document.getElementById('hero-title');
+    if (!host || host.closest('x-dc')) { if (++gtries < 400) setTimeout(armHeroGlow, 60); return; }
+    var targets = host.querySelectorAll('div, h1, p');
+    Array.prototype.forEach.call(targets, function(el){
+      if (el.querySelector('.glow-clone') || !el.textContent.trim()) return;
+      el.classList.add('glow-host');
+      var clone = el.cloneNode(true);
+      clone.classList.remove('glow-host');   /* ereditata dal cloneNode: la sua position:relative vince su absolute e il clone entra nel flusso raddoppiando l'altezza */
+      clone.classList.add('glow-clone');
+      clone.setAttribute('aria-hidden', 'true');
+      clone.style.margin = '0';
+      el.appendChild(clone);
+      el.addEventListener('pointermove', function(e){
+        var r = el.getBoundingClientRect();
+        clone.style.setProperty('--gx', (e.clientX - r.left) + 'px');
+        clone.style.setProperty('--gy', (e.clientY - r.top) + 'px');
+      }, { passive: true });
+    });
+  })();
+})();
+</script>
+
+<!-- ============ FLUID BACKGROUND (shader GPU, reagisce alla velocita' di scroll) ============
+     REGOLA: vive SOLO nel hero (agganciato a #hero-sticky via JS), mai sopra i testi delle sezioni. -->
+<script type="module">
+(async function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = window.matchMedia('(pointer: fine)').matches;
+  var mem = navigator.deviceMemory || 4, cores = navigator.hardwareConcurrency || 4;
+  var tier = 'high';
+  if (mem <= 4 || cores <= 4) tier = 'mid';
+  if (mem <= 2 || cores <= 2) tier = 'low';
+  if (reduce || !fine || tier === 'low') return;                    // solo desktop capace
+
+  /* Layer globale fisso (la versione che piaceva) + REGOLA: mask laterale.
+     La scia vive ai MARGINI dello schermo e sfuma a zero sulla colonna centrale del contenuto:
+     presente ovunque scrolli, mai sopra i testi. */
+  var cv = document.createElement('canvas');
+  cv.id = 'fluid-fx';
+  cv.style.cssText = 'position:fixed;inset:0;width:100vw;height:100vh;z-index:40;pointer-events:none;opacity:0.5;mix-blend-mode:screen;';
+  document.body.appendChild(cv);
+
+  /* MASK DINAMICA: la fascia si ritira quando una sezione di contenuto occupa il centro schermo
+     e si riespande nelle zone full-bleed (hero/manifesto). Sfumatura larga, niente taglio netto. */
+  var INSETS = { 'Hero': 0.34, 'Selected Work': 0.15, 'How I Work': 0.15, 'Operational Scale': 0.15,
+                 'Manifesto': 0.40, 'Builder Island': 0.17, 'Contact': 0.26 };
+  var curInset = 0.34, sections = null;
+  function targetInset() {
+    if (!sections || !sections.length) sections = Array.prototype.slice.call(document.querySelectorAll('[data-screen-label]'));
+    var mid = window.innerHeight / 2;
+    for (var i = 0; i < sections.length; i++) {
+      var r = sections[i].getBoundingClientRect();
+      if (r.top <= mid && r.bottom >= mid) return INSETS[sections[i].getAttribute('data-screen-label')] || 0.18;
+    }
+    return 0.22;
+  }
+  function applyMask() {
+    curInset += (targetInset() - curInset) * 0.04;               /* si inserisce e ritorna, morbido */
+    var p = curInset * 100;
+    var solid = Math.max(0, p - 16).toFixed(1);                  /* rampa di sfumatura ~26%: soft */
+    var fade  = Math.min(50, p + 10).toFixed(1);
+    var m = 'linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,1) ' + solid + '%, rgba(0,0,0,0) ' + fade + '%, rgba(0,0,0,0) ' + (100 - fade) + '%, rgba(0,0,0,1) ' + (100 - solid) + '%, rgba(0,0,0,1) 100%)';
+    cv.style.webkitMaskImage = m; cv.style.maskImage = m;
+  }
+
+  let THREE;
+  try { THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js'); }
+  catch(e) { cv.remove(); return; }
+
+  var dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  var renderer = new THREE.WebGLRenderer({ canvas: cv, antialias: false, alpha: true });
+  renderer.setPixelRatio(dpr);
+  var simScale = tier === 'mid' ? 0.35 : 0.5;
+  function size(){ renderer.setSize(window.innerWidth, window.innerHeight, false); }
+  size();
+
+  var rtOpts = { type: THREE.HalfFloatType, magFilter: THREE.LinearFilter, minFilter: THREE.LinearFilter };
+  var W = Math.floor(window.innerWidth * simScale), H = Math.floor(window.innerHeight * simScale);
+  var rtA = new THREE.WebGLRenderTarget(W, H, rtOpts);
+  var rtB = new THREE.WebGLRenderTarget(W, H, rtOpts);
+  var camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  var scene = new THREE.Scene();
+
+  var simMat = new THREE.ShaderMaterial({
+    uniforms: { uPrev:{value:null}, uRes:{value:new THREE.Vector2(W,H)}, uMouse:{value:new THREE.Vector2(-9,-9)}, uVel:{value:0}, uTime:{value:0}, uSide:{value:0} },
+    vertexShader: 'varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.,1.); }',
+    fragmentShader: [
+      'precision highp float; varying vec2 vUv;',
+      'uniform sampler2D uPrev; uniform vec2 uRes; uniform vec2 uMouse; uniform float uVel; uniform float uTime; uniform float uSide;',
+      'float n(vec2 p){ return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453); }',
+      'float vn(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f);',
+      '  return mix(mix(n(i),n(i+vec2(1.,0.)),f.x), mix(n(i+vec2(0.,1.)),n(i+vec2(1.,1.)),f.x), f.y); }',
+      'void main(){',
+      '  vec2 px = 1.0/uRes;',
+      '  vec3 c = texture2D(uPrev, vUv).rgb;',
+      '  float t = uTime*0.22;',
+      /* swirl organico a 2 ottave (curl-ish da value noise) al posto del moto sin piatto */
+      '  float a1 = vn(vUv*3.0 + vec2(t*0.6, -t*0.4)) * 6.2831;',
+      '  float a2 = vn(vUv*7.0 - vec2(t*0.3,  t*0.5)) * 6.2831;',
+      '  vec2 flow = (vec2(cos(a1),sin(a1))*0.7 + vec2(cos(a2),sin(a2))*0.3) * 0.0024;',
+      '  vec3 adv = texture2D(uPrev, vUv - flow).rgb;',
+      '  c = mix(c, adv, 0.88);',
+      '  vec3 sum = texture2D(uPrev,vUv+vec2(px.x,0.)).rgb + texture2D(uPrev,vUv-vec2(px.x,0.)).rgb',
+      '           + texture2D(uPrev,vUv+vec2(0.,px.y)).rgb + texture2D(uPrev,vUv-vec2(0.,px.y)).rgb;',
+      '  c = mix(c, sum*0.25, 0.13);',
+      /* UNA fiamma predominante: uSide (0=sx, 1=dx) e' la sua POSIZIONE.
+         Si trasferisce da un margine all'altro passando dal centro (dove la mask la porta
+         dietro il contenuto), compressa in transito, si espande quando arriva. */
+      '  float breathe = 0.16 + 0.07*sin(uTime*0.6);',
+      '  float eL = 0.055 + 0.030*sin(uTime*0.23);',
+      '  float eR = 0.945 - 0.030*cos(uTime*0.19);',
+      '  float wob = (vn(vec2(vUv.y*5.5 + 1.7, uTime*1.35)) - 0.5) * 0.11;',
+      '  float fx = mix(eL, eR, uSide) + wob;',
+      '  float edge = smoothstep(0.0, 1.0, abs(uSide-0.5)*2.0);',   /* 1 al margine, 0 al centro */
+      '  float widthK = mix(24.0, 11.0, edge);',                    /* stretta mentre viaggia, espansa all\'arrivo */
+      '  float aspect = uRes.x/uRes.y;',
+      '  float body = exp(-pow((vUv.x-fx)*aspect*widthK, 2.0));',
+      '  float vert = smoothstep(0.03,0.30,vUv.y)*smoothstep(0.99,0.55,vUv.y);',
+      '  float flick = 0.5 + 0.5*vn(vec2(uTime*2.8+1.7, vUv.y*9.0));',
+      '  float amp = mix(0.75, 1.6, edge);',                        /* predominante ferma, discreta in transito */
+      '  float g = body * vert * flick * amp;',
+      /* tinta viva: oro -> ember -> viola, col viola di nuovo ben presente */
+      '  float hue = vn(vUv*2.5 + vec2(t*0.4));',
+      '  vec3 gold  = vec3(0.914,0.722,0.447);',
+      '  vec3 ember = vec3(0.95,0.52,0.30);',
+      '  vec3 viola = vec3(0.47,0.55,0.86);',
+      '  vec3 tint = mix(mix(gold, ember, smoothstep(0.35,0.75,hue)), viola, smoothstep(0.55,0.92,hue)*0.85);',
+      '  float boost = 1.0 + uVel*4.0;',                       /* lo scroll amplifica, non innesca */
+      '  c += tint * g * breathe * boost;',
+      /* banda che scandisce in verticale quando scrolli forte (il vecchio effetto, come extra) */
+      '  float band = smoothstep(0.14,0.0, abs(vUv.y - fract(uTime*0.05)));',
+      '  c += tint * uVel * band * 0.45;',
+      /* scia del puntatore */
+      '  float d = distance(vUv*uRes, uMouse*uRes);',
+      '  c += tint * smoothstep(34.0,0.0,d) * 0.25;',
+      '  c *= 0.982;',
+      '  gl_FragColor = vec4(clamp(c,0.0,1.0),1.0);',
+      '}'
+    ].join('\n')
+  });
+  scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), simMat));
+
+  var dispMat = new THREE.ShaderMaterial({
+    uniforms: { uTex:{value:null} }, transparent: true,
+    vertexShader: 'varying vec2 vUv; void main(){ vUv=uv; gl_Position=vec4(position.xy,0.,1.); }',
+    fragmentShader: 'precision highp float; varying vec2 vUv; uniform sampler2D uTex; void main(){ vec3 c=texture2D(uTex,vUv).rgb; float a=clamp(max(max(c.r,c.g),c.b),0.0,1.0); gl_FragColor=vec4(c, a*0.85); }'
+  });
+  var dispScene = new THREE.Scene();
+  dispScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2), dispMat));
+
+  window.addEventListener('pointermove', function(e){
+    simMat.uniforms.uMouse.value.set(e.clientX/window.innerWidth, 1.0 - e.clientY/window.innerHeight);
+  }, { passive: true });
+  window.addEventListener('resize', function(){
+    size();
+    W = Math.floor(window.innerWidth*simScale); H = Math.floor(window.innerHeight*simScale);
+    rtA.setSize(W,H); rtB.setSize(W,H); simMat.uniforms.uRes.value.set(W,H);
+  });
+
+  // velocita' di scroll misurata da scrollY (Lenis anima window -> funziona senza toccare il suo init)
+  var lastY = window.scrollY, targetVel = 0, vel = 0, time = 0, side = 0;
+  function loop(){
+    requestAnimationFrame(loop);
+    applyMask();
+    var y = window.scrollY;
+    targetVel = Math.min(Math.abs(y - lastY) / 40, 1.4);
+    lastY = y;
+    vel += (targetVel - vel) * 0.08;
+    time += 0.016;
+    /* posizione della fiamma: parte a SINISTRA in cima, arriva a DESTRA a meta' pagina,
+       torna a sinistra in fondo — un ciclo intero sull'altezza reale della pagina, super smooth */
+    var maxScroll = Math.max(2000, document.documentElement.scrollHeight - window.innerHeight);
+    var sideTarget = 0.5 - 0.5 * Math.cos(y * 6.2832 / maxScroll);
+    side += (sideTarget - side) * 0.04;
+    simMat.uniforms.uSide.value = side;
+    simMat.uniforms.uTime.value = time;
+    simMat.uniforms.uVel.value = vel;
+    simMat.uniforms.uPrev.value = rtA.texture;
+    renderer.setRenderTarget(rtB); renderer.render(scene, camera);
+    dispMat.uniforms.uTex.value = rtB.texture;
+    renderer.setRenderTarget(null); renderer.render(dispScene, camera);
+    var tmp = rtA; rtA = rtB; rtB = tmp;
+  }
+  loop();
+})();
 </script>
 </body>
 </html>
