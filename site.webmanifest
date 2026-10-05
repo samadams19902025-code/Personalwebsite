@@ -1,0 +1,13 @@
+{
+  "name": "Enrico Lampis",
+  "short_name": "Enrico Lampis",
+  "description": "Hand-built, high-end websites coded from scratch and shipped live in days.",
+  "icons": [
+    { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#0e0e11",
+  "background_color": "#0e0e11",
+  "display": "browser",
+  "start_url": "/"
+}
