@@ -1,0 +1,51 @@
+# Enrico Lampis
+
+> Web designer and builder. Codes every site by hand, no templates and no page builders, and ships custom high-end websites live within days. Twelve live sites for restaurants, shops and service businesses in Italy and Germany. Works remote and on-site.
+
+## What this is
+
+enricowebdigital.com is the portfolio and contact page of Enrico Lampis, an independent web designer and builder.
+
+Every site is written by hand in clean, fast HTML tailored to the brand. No page builders, no themes, no off-the-shelf templates. Design judgement comes first; AI is used as execution, through a structured in-house Master-Prompt method, which is what makes fully custom work deliverable in days instead of months.
+
+## Services
+
+- **Hand-coded website** - every page coded by hand in clean, fast HTML tailored to the brand. No page builders, no themes.
+- **Design and build with AI, done right** - a structured in-house Master-Prompt method pairs real design judgement with AI execution. Fully custom work delivered in days, not months.
+- **Mobile-first launch** - designed for the phone first, built to load instantly, shipped live within days of starting.
+
+Typical clients: restaurants, bakeries, bars, shops, florists and local service businesses that need a site which makes the right first impression on a phone.
+
+## Selected work (all live)
+
+- Giggiolandia, candy and party shop, Cagliari: https://giggiolandia.enricowebdigital.com
+- OttO, mocktails and cocktails, Cagliari: https://ottocagliari.enricowebdigital.com
+- Loanna, bakery and patisserie, Leipzig: https://loanna.enricowebdigital.com
+- Era, restaurant and pizzeria, Leipzig: https://era.enricowebdigital.com
+- Luxurygarden, event venue, Leipzig: https://luxurygarden.enricowebdigital.com
+- Veganese, vegan restaurant, Leipzig: https://veganese.enricowebdigital.com
+- I Fiori di Lina, florist, Cagliari: https://ifioridilina.enricowebdigital.com
+- MaeStria, esoteric shop, Cagliari: https://maestria.enricowebdigital.com
+- Azienda Fedele, Calabrian food with nationwide shipping: https://fedele.enricowebdigital.com
+- Panokuko, gluten-free bakery and cafe, Leipzig: https://panokuko.enricowebdigital.com
+- Pizzeria Napoli, pizzeria, Leipzig: https://pizzerianapoli.enricowebdigital.com
+- G2000, garage doors and gates, Leipzig: https://samadams19902025-code.github.io/G2000/
+
+## Beyond the browser
+
+Enrico directed a self-publishing company, building and leading a 6 to 7 person team across writing, design, advertising and social proof, and scaling production from 3 to 12 or more active units. He designed the automation behind it: web-based pipelines that assemble content, slides, voice-over and video, publishing straight to YouTube, Instagram and Facebook.
+
+## Builder Island
+
+Enrico co-founded Builder Island with Alessandro: an in-person community of founders, builders and creators based in Sardinia. Not an online community. Weekly in-person sessions, building in public, mutual accountability. https://builderisland.club
+
+## Contact
+
+- Email: enricolampis651@gmail.com
+- LinkedIn: https://www.linkedin.com/in/enrico-lampis-7104ab190/
+
+Open to the world, remote and on-site. There is no public phone number and no contact form on the site.
+
+## Pages
+
+- Home: https://enricowebdigital.com/
